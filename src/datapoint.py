@@ -28,7 +28,7 @@ class DataPoint:
         nb_total_of_the_feature = len(list_feature_value)
         for classe in observation.classes:
             pass
-        return gini_of_feature
+        pass
 
     @staticmethod
     def _get_feature(feature: str, data: 'DataPoint') -> List[float]:
