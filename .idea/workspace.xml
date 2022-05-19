@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="782eddb9-f3f8-4a54-bf5d-bc647ce37958" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/datapoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/datapoint.py" afterDir="false" />
-    </list>
+    <list default="true" id="782eddb9-f3f8-4a54-bf5d-bc647ce37958" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,6 +50,14 @@
       <option name="presentableId" value="Default" />
       <updated>1652742746838</updated>
     </task>
+    <task id="LOCAL-00001" summary="Creation of the virtual env python">
+      <created>1652918540611</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652918540611</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -64,5 +70,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Creation of the virtual env python" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creation of the virtual env python" />
   </component>
 </project>
