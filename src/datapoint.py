@@ -6,16 +6,22 @@ class DataPoint:
     def __init__(self, data: Dict[str, np.array], feature_predict_name: str, method: str = 'C'):
         """
         :param: data the data which will be the input to the decision tree
-        :param: method Refers of the tree is 'R' for regression or 'C' for classification
+        :param: Refers to the method used 'R' is for regression or 'C' is for classification
         """
-        self.feature_to_predict = data.pop(feature_predict_name, None)
-        self.datapoint = data
-        self.method = method
+        self.feature_to_predict: np.array = data.pop(feature_predict_name, None)
+        self.datapoint: Dict[str, np.array] = data
+        self.method: str = method
 
-    def gini_attribute(self, feature: str, attribute: str):
-        element_feature = self.datapoint[feature]
-        unique = np.unique(self.feature_to_predict)
-        dict_gini = {}
+    def gini_attribute(self, feature: str, attribute: str) -> float:
+        """
+        Compute the gini index of one attribute of a feature
+        :param feature:
+        :param attribute:
+        :return:
+        """
+        element_feature: np.array = self.datapoint[feature]
+        unique: np.array = np.unique(self.feature_to_predict)
+        dict_gini: Dict[str, int] = {}
 
         for i in range(len(unique)):
             dict_gini[unique[i]] = 0
@@ -23,15 +29,20 @@ class DataPoint:
                 if element_feature[j] == attribute and self.feature_to_predict[i] == unique[i]:
                     dict_gini[unique[i]] += 1
 
-        gini = np.array(list(dict_gini.values()))
-        nb_occurence_attribute = np.sum(gini)
+        gini: np.array = np.array(list(dict_gini.values()))
+        nb_occurence_attribute: int = np.sum(gini)
         gini = gini/nb_occurence_attribute
 
         return 1 - np.sum(gini**2)
 
-    def gini_feature(self, feature: str) -> Dict[str, float]:
+    def gini_feature(self, feature: str) -> float:
+        """
+        Compute the gini index for a feature given
+        :param feature:
+        :return: the gini index for the given feature
+        """
         element_feature: np.array = self.datapoint[feature]
-        gini_index = {}
+        gini_index: Dict[str, float] = {}
         unique, counts = np.unique(element_feature, return_counts=True)
         unique_dict = dict(zip(unique, counts))
         length_data = len(self.datapoint)
@@ -42,8 +53,8 @@ class DataPoint:
         for attribute, gini in gini_index.items():
             weighted_sum += (unique_dict[attribute]/length_data)*gini
 
-        gini_index['weighted_sum'] = weighted_sum
-        return gini_index
+        # gini_index['weighted_sum'] = weighted_sum
+        return weighted_sum
 
     def entropy(self, feature: str) -> float:
         """
@@ -60,6 +71,6 @@ class DataPoint:
 
 
 if __name__ == '__main__':
-
+    pass
 # Structure of the data :
 #   Dict { feature 1 : [ value1, value2, ...], feature 2 : [value1, value2, ...]
