@@ -1,38 +1,76 @@
-from typing import Dict, List
+from typing import Dict
+import numpy as np
 
 
 class DataPoint:
-    def __init__(self, classes: Dict[str, List[str]], features: Dict[str, float]):
+    def __init__(self, data: Dict[str, np.array], feature_predict_name: str, method: str = 'C'):
         """
-
-        :param classes: list of sub feature of a feature
-        :param features: the values of the different subfeatures
+        :param: data the data which will be the input to the decision tree
+        :param: Refers to the method used 'R' is for regression or 'C' is for classification
         """
-        self.classes = classes
-        self.features = features
+        self.feature_to_predict: np.array = data.pop(feature_predict_name, None)
+        self.datapoint: Dict[str, np.array] = data
+        self.method: str = method
 
-    @staticmethod
-    def computation_gini(cls, observation: 'DataPoint', feature: str) -> float:
+    def gini_attribute(self, feature: str, attribute: str) -> float:
         """
-        Compute the gini indice of a feature based on the data
-
-        :param cls:
-        :param observation: The data used for the CART
-        :param feature: The computation of the specific feature
-        :return: gini for a chosen feature
+        Compute the gini index of one attribute of a feature
+        :param feature:
+        :param attribute:
+        :return:
         """
-        # TODO : Je dois réflechir au concept de classe et de feature, et selon ma déf, je calcule le gini d'UNE
-        # TODO : D'UNE FEATURE ICI. Donc cela à revient à calculer gini de chacun des classes et de pondérer ces gini par leurs nb d'observation
-        gini_of_feature: float
-        list_feature_value = cls._get_feature(feature=feature,)
-        nb_total_of_the_feature = len(list_feature_value)
-        for classe in observation.classes:
-            pass
-        pass
+        element_feature: np.array = self.datapoint[feature]
+        unique: np.array = np.unique(self.feature_to_predict)
+        dict_gini: Dict[str, int] = {}
 
-    @staticmethod
-    def _get_feature(feature: str, data: 'DataPoint') -> List[float]:
-        list_feature_value: List[float] = data.classes[feature]
-        return list_feature_value
+        for i in range(len(unique)):
+            dict_gini[unique[i]] = 0
+            for j in range(len(element_feature)):
+                if element_feature[j] == attribute and self.feature_to_predict[i] == unique[i]:
+                    dict_gini[unique[i]] += 1
+
+        gini: np.array = np.array(list(dict_gini.values()))
+        nb_occurence_attribute: int = np.sum(gini)
+        gini = gini/nb_occurence_attribute
+
+        return 1 - np.sum(gini**2)
+
+    def gini_feature(self, feature: str) -> float:
+        """
+        Compute the gini index for a feature given
+        :param feature:
+        :return: the gini index for the given feature
+        """
+        element_feature: np.array = self.datapoint[feature]
+        gini_index: Dict[str, float] = {}
+        unique, counts = np.unique(element_feature, return_counts=True)
+        unique_dict = dict(zip(unique, counts))
+        length_data = len(self.datapoint)
+
+        for attribute in element_feature:
+            gini_index[attribute] = self.gini_attribute(feature, attribute)
+        weighted_sum: float = 0.0
+        for attribute, gini in gini_index.items():
+            weighted_sum += (unique_dict[attribute]/length_data)*gini
+
+        # gini_index['weighted_sum'] = weighted_sum
+        return weighted_sum
+
+    def entropy(self, feature: str) -> float:
+        """
+        Compute the entropy impurity
+
+        :param: feature chosen for computation
+        :return: entropy: float
+        """
+        unique, counts = np.unique(self.datapoint["feature"], return_counts=True)
+        length_feature = self.datapoint[feature].shape[0]
+        counts = counts/length_feature
+        counts = np.sum(-counts*np.log2(counts))
+        return counts
+
+
+if __name__ == '__main__':
+    pass
 # Structure of the data :
 #   Dict { feature 1 : [ value1, value2, ...], feature 2 : [value1, value2, ...]
