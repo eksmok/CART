@@ -3,7 +3,7 @@ import numpy as np
 
 
 class DataPoint:
-    def __init__(self, data: Dict[str, np.array], feature_predict_name: str, method: str = 'C'):
+    def __init__(self, data: Dict[str, np.ndarray], feature_predict_name: str, method: str = 'C'):
         """
         :param: data the data which will be the input to the decision tree
         :param: Refers to the method used 'R' is for regression or 'C' is for classification
@@ -12,7 +12,7 @@ class DataPoint:
         self.datapoint: Dict[str, np.array] = data
         self.method: str = method
 
-    def gini_attribute(self, feature: str, attribute: str) -> float:
+    def _gini_attribute(self, feature: str, attribute: str) -> float:
         """
         Compute the gini index of one attribute of a feature
         :param feature:
@@ -56,7 +56,7 @@ class DataPoint:
         # gini_index['weighted_sum'] = weighted_sum
         return weighted_sum
 
-    def entropy(self, feature: str) -> float:
+    def _entropy(self, feature: str) -> float:
         """
         Compute the entropy impurity
 
@@ -74,3 +74,13 @@ if __name__ == '__main__':
     pass
 # Structure of the data :
 #   Dict { feature 1 : [ value1, value2, ...], feature 2 : [value1, value2, ...]
+# Abstract class metric : gini, entropy hérite,
+# Enum pour method
+# Changer le format des données prendre des ndarray en supposant que les labels sont connus
+# Généralité into details
+# Build Tree plein de petite fonctiosn
+# Exit : Leaf
+# self.dataset_pure
+# dataset gauche droite
+# graph viz
+# draft pull request

@@ -4,7 +4,6 @@
     <list default="true" id="782eddb9-f3f8-4a54-bf5d-bc647ce37958" name="Changes" comment="Creation of the virtual env python">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/datapoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/datapoint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tree.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,5 +106,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creation of the virtual env python" />
     <option name="LAST_COMMIT_MESSAGE" value="Creation of the virtual env python" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/tree.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
