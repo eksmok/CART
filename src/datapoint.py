@@ -9,8 +9,8 @@ class DataPoint:
         :param: data the data which will be the input to the decision tree
         :param: Refers to the method used 'R' is for regression or 'C' is for classification
         """
-        self.feature_to_predict: np.array = data.pop(feature_predict_name, None)
-        self.datapoint: Dict[str, np.array] = data
+        self.feature_to_predict: np.ndarray = data.pop(feature_predict_name, None)
+        self.datapoint: Dict[str, np.ndarray] = data
         self.method: str = method
 
     def gini_attribute(self, feature: str, attribute: str) -> float:
@@ -57,7 +57,6 @@ class DataPoint:
         # gini_index['weighted_sum'] = weighted_sum
         return weighted_sum
 
-
     def _entropy(self, feature: str) -> float:
         """
         Compute the entropy impurity
@@ -71,6 +70,15 @@ class DataPoint:
         counts = np.sum(-counts*np.log2(counts))
         return counts
 
+class Gini:
+    def __init__(self):
+        pass
+
+    def gini_feature(self,feature: str, dataset: Dict[str, np.ndarray]) -> float:
+        return 0
+
+    def gini_attribute(self):
+        return 0
 
 if __name__ == '__main__':
     pass
