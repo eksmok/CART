@@ -1,12 +1,15 @@
 from typing import Dict
 import numpy as np
 from enum import Enum
+from abc import ABC
+
 
 class Method(Enum):
-    'C' = 'Classification'
-    'R' = 'Regression'
+    C = 'Classification'
+    R = 'Regression'
 
-class DataPoint:
+
+class DataSet:
 
     def __init__(self, data: Dict[str, np.ndarray], feature_predict_name: str, method: Method):
         """
@@ -14,26 +17,29 @@ class DataPoint:
         :param: Refers to the method used 'R' is for regression or 'C' is for classification
         """
         self.feature_to_predict: np.ndarray = data.pop(feature_predict_name, None)
-        self.datapoint: Dict[str, np.ndarray] = data
-        self.method: str = method
+        self.dataset: Dict[str, np.ndarray] = data
+        self.method: Method = method
 
-    def _entropy(self, feature: str) -> float:
+    def _entropy(self, feature: str) -> None:
         """
         Compute the entropy impurity
 
         :param: feature chosen for computation
         :return: entropy: float
         """
-        unique, counts = np.unique(self.datapoint["feature"], return_counts=True)
-        length_feature = self.datapoint[feature].shape[0]
+        unique, counts = np.unique(self.dataset["feature"], return_counts=True)
+        length_feature = self.dataset[feature].shape[0]
         counts = counts/length_feature
         counts = np.sum(-counts*np.log2(counts))
-        return counts
+        pass
 
 
-class Gini:
+class Metrics(ABC):
     def __init__(self):
         pass
+
+
+class Gini(Metrics):
 
     @classmethod
     def gini_feature(cls, feature: str, dataset: Dict[str, np.ndarray], feature_to_predict: np.ndarray) -> float:
@@ -87,7 +93,7 @@ class Gini:
                     dict_gini[unique[i]] += 1
 
         gini: np.array = np.array(list(dict_gini.values()))
-        nb_occurence_attribute: int = np.sum(gini)
+        nb_occurence_attribute = np.sum(gini)
         gini = gini / nb_occurence_attribute
         return 1 - np.sum(gini ** 2)
 
