@@ -61,7 +61,9 @@ class Tree:
         self.list_node.append(node)
         features = list(node.data_node.datapoint.keys())
         dataset: Dict[str, np.ndarray] = node.data_node.datapoint
-        gini = self._get_gini_index(features=features, dataset=dataset)
+        feature_to_predict = node.data_node.feature_to_predict
+
+        gini = self._get_gini_index(features=features, dataset=dataset, feature_to_predict=feature_to_predict)
 
         if self._exit_condition(node):
             return Leaf(DataPoint(dataset, feature_predict_name=node.data_node.feature_to_predict))
@@ -80,11 +82,11 @@ class Tree:
         return self._exit
 
     @staticmethod
-    def _get_gini_index(features: List[str], dataset: Dict[str, np.ndarray]):
+    def _get_gini_index(features: List[str], dataset: Dict[str, np.ndarray], feature_to_predict: np.ndarray):
         metric: Gini = Gini()
         gini: Dict[str, float] = {}
         for feature in features:
-            gini[feature] = metric.gini_feature(feature=feature, dataset=dataset)
+            gini[feature] = metric.gini_feature(feature=feature, dataset=dataset, feature_to_predict=feature_to_predict)
         return gini
 
     def _filter_feature_value(self, value: any, feature_chosen_values: np.ndarray, node: Node) -> Dict[str, np.ndarray]:
